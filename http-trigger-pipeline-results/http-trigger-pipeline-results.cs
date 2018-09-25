@@ -33,7 +33,16 @@ namespace HttpTrigger.Pipeline.Results
 
             var success = twilioService.SendSms("Check the oven. Your build is done!", new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
 
-            return (ActionResult)new OkObjectResult("Sms sent successfully.");
+            if(success)
+            {
+                return (ActionResult)new OkObjectResult("Sms sent successfully.");
+                //return Ok("Sms sent successfully");
+            }
+            else
+            {
+                return (ActionResult)new BadRequestObjectResult("Sms failed! You messed up!");
+                //return NotFound("Sms not sent correctly");
+            }
         }
     }
 }
