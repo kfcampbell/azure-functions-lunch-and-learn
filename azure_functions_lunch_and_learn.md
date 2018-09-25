@@ -7,7 +7,7 @@
     - document adding unit test project
         - https://github.com/dotnet/docs/blob/master/docs/core/testing/unit-testing-with-dotnet-test.md
         - https://github.com/Azure-Samples/functions-unittesting-sample/blob/master/DotNet/DotNet.Test/HttpTriggerTest.cs
-        - dotnet new xunit
+        - dotnet new nunit
         - dotnet new sln
         - dotnet sln add reference
         - dotnet add package Moq

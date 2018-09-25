@@ -31,17 +31,16 @@ namespace HttpTrigger.Pipeline.Results
                 log.LogInformation("C# HTTP trigger function processed a request.");
             }
 
-            var success = twilioService.SendSms("Check the oven. Your build is done!", new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
+            var success = twilioService.SendSms("Look! A wild release appeared!", 
+                new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
 
             if(success)
             {
                 return (ActionResult)new OkObjectResult("Sms sent successfully.");
-                //return Ok("Sms sent successfully");
             }
             else
             {
                 return (ActionResult)new BadRequestObjectResult("Sms failed! You messed up!");
-                //return NotFound("Sms not sent correctly");
             }
         }
     }
