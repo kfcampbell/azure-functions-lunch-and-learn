@@ -10,7 +10,7 @@ namespace HttpTrigger.Pipeline.Results
             DependencyInjection.Initialize(builder =>
             {
                 //Implicity registration
-                builder.RegisterType<ServiceOne>().As<IServiceOne>();
+                builder.RegisterType<TwilioService>().As<ITwilioService>();
                 //Explicit registration
                 //builder.Register<Example>(c => new Example(c.Resolve<ISample>())).As<IExample>();
                 //Registration by autofac module
@@ -21,14 +21,4 @@ namespace HttpTrigger.Pipeline.Results
             }, functionName);
         }
     } 
-
-    public class ServiceOne : IServiceOne
-    {
-        public string Execute()
-        {
-            return "This is a result of an injection";
-        }
-    }
-
-    public interface IServiceOne { string Execute(); }
 }

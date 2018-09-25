@@ -1,6 +1,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -24,19 +25,13 @@ namespace HttpTrigger.Pipeline.Results
     {
         [FunctionName("http_trigger_pipeline_results")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequest req,
-         ILogger log, [Inject] IServiceOne serviceOne)
+         ILogger log, [Inject] ITwilioService twilioService)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            twilioService.SendSms("Check the oven. Your build is done!", new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            return (ActionResult)new OkObjectResult("Sms sent successfully.");
         }
     }
 }
