@@ -17,31 +17,34 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-public interface ITwilioService
+namespace HttpTrigger.Pipeline.Results
 {
-    void SendSms(string contents, List<string> phoneNumbers);
-}
-
-public class TwilioService : ITwilioService
-{
-    public TwilioService() { }
-
-    public void SendSms(string contents, List<string> phoneNumbers)
+    public interface ITwilioService
     {
-        string accountSid = Environment.GetEnvironmentVariable("TwilioAccountSid");
-        string authToken = Environment.GetEnvironmentVariable("TwilioAuthToken");
-
-        TwilioClient.Init(accountSid, authToken);
-
-        foreach(var number in phoneNumbers)
-        {
-            var message = MessageResource.Create(
-                body: contents,
-                from: new PhoneNumber(Environment.GetEnvironmentVariable("FromPhoneNumber")),
-                to: new PhoneNumber(number));
-
-            Console.WriteLine(message.Sid);
-        }
+        bool SendSms(string contents, List<string> phoneNumbers);
     }
 
+    public class TwilioService : ITwilioService
+    {
+        public TwilioService() { }
+
+        public bool SendSms(string contents, List<string> phoneNumbers)
+        {
+            string accountSid = Environment.GetEnvironmentVariable("TwilioAccountSid");
+            string authToken = Environment.GetEnvironmentVariable("TwilioAuthToken");
+
+            TwilioClient.Init(accountSid, authToken);
+
+            foreach (var number in phoneNumbers)
+            {
+                var message = MessageResource.Create(
+                    body: contents,
+                    from: new PhoneNumber(Environment.GetEnvironmentVariable("FromPhoneNumber")),
+                    to: new PhoneNumber(number));
+
+                Console.WriteLine(message.Sid);
+            }
+            return true;
+        }
+    }
 }

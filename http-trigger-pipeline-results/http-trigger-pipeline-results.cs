@@ -27,9 +27,12 @@ namespace HttpTrigger.Pipeline.Results
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequest req,
          ILogger log, [Inject] ITwilioService twilioService)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            if(log != null)
+            {
+                log.LogInformation("C# HTTP trigger function processed a request.");
+            }
 
-            twilioService.SendSms("Check the oven. Your build is done!", new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
+            var success = twilioService.SendSms("Check the oven. Your build is done!", new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
 
             return (ActionResult)new OkObjectResult("Sms sent successfully.");
         }
