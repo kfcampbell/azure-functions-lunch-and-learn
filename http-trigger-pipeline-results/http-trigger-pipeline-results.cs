@@ -31,7 +31,7 @@ namespace HttpTrigger.Pipeline.Results
                 log.LogInformation("C# HTTP trigger function processed a request.");
             }
 
-            var success = twilioService.SendSms("Look! A wild release appeared!", 
+            var success = twilioService.SendSms("Hey! You have a release to check!", 
                 new List<string> { Environment.GetEnvironmentVariable("ToPhoneNumber") });
 
             if(success)
