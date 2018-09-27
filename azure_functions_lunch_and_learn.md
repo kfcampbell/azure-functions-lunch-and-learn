@@ -5,8 +5,8 @@
 ## Topics
     - Overview of common enterprise tasks and how functions can replace them
     - Framework installation
-    - CI/CD of functions
     - Dependency-injecting and unit testing functions
+    - CI/CD of functions
     - AppInsights/Metrics
     - Using a function to host a front-end
 
@@ -23,19 +23,12 @@
     - azure storage explorer
         - https://azure.microsoft.com/en-us/features/storage-explorer/
     
-## Functions CI/CD
-    - basic arm template. create and push and then copy from azure and then trim down
-    - show build/release process
-        - build
-            - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_build?definitionId=2
-        - release
-            - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_releases2?definitionId=1&view=mine&_a=releases
-
 ## Dependency-injecting and Unit Testing Functions
     - create new http trigger function
         - azure functions vscode extension
         - create project first
         - then create new function app
+            - access rights: function
     - get information from https://www.twilio.com/console
     - curl request to test local
         - curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:7071/api/pipeline_results_http_trigger?name=Keegan_Campbell_MD | json
@@ -51,6 +44,31 @@
         - Moq v4.10.0
         - make sure to add packages to both projects
         - make sure to delete bin/obj folders before testing/building
+    - potential errors
+        - duplicate files
+            - delete obj/bin folders
+        - visualstudio not found
+            - add packages to both projects
+
+## Functions CI/CD
+    - basic arm template. create and push and then copy from azure and then trim down
+    - show build/release process
+        - build
+            - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_build?definitionId=2
+        - release
+            - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_releases2?definitionId=1&view=mine&_a=releases
+    - gates
+        - create service connection
+            - type: generic
+            - url: function URL
+            - username: garbage
+            - password: garbage
+        - url suffix/params are empty
+        - get method
+        - leave params
+    - potential errors
+        - 500 errors on deployment due to autofac
+            - restart function
 
 ## AppInsights
     - live metrics stream
@@ -85,9 +103,13 @@
         - easy scale up/down due to serverless architecture
     - cons
         - cold start times
+            - 'always on' functionality combats this
         - not suitable for complex projects
+    - possible errors
+        - 500 errors hitting site
+            - make sure backend urls are actually from blob storage
+            - make sure you're on windows in a new resource group
     
-
 ## Questions
     - how to handle multiple endpoints?
         - different function solutions
@@ -97,11 +119,9 @@
         - demo queues
         - logic apps
         - other function URLs in configuration
-
-## To Look Up Later
-    - twilio pricing
-        - $1/number/month
-        - sms price?
+    - secret management
+        - how to show?
+        - enough time to show?
 
 ## Helpful Links
     - ci/cd
@@ -116,3 +136,8 @@
         - https://blog.cloudboost.io/host-spa-with-azure-functions-62e8b55a23e5
     - miscellaneous
         - https://blogs.msdn.microsoft.com/appserviceteam/2017/09/25/develop-azure-functions-on-any-platform/
+
+## Miscellaneous
+    - twilio pricing
+        - $1/number/month
+        - sms: $0.0075/outbound message (75 cents/100 messages)
