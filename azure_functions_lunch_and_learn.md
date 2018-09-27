@@ -29,6 +29,7 @@
         - create project first (in subdirectory to avoid package conflicts between tests and implementation)
         - then create new function app
             - access rights: anonymous
+                - (anyone can access without a key)
         - packages to add
             - AzureFunctions.Autofac v3.0.5
             - Twilio v5.17.0
@@ -51,6 +52,11 @@
             - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_build?definitionId=2
         - release
             - https://dev.azure.com/keegancampbell/azure-functions-for-enterprise/_releases2?definitionId=1&view=mine&_a=releases
+    - build
+        - use dotnet core app template
+        - uncheck Publish Web Projects in Publish task
+    - release
+        - use azure app service deploy
     - gates
         - create service connection
             - type: generic
@@ -61,8 +67,11 @@
         - get method
         - leave params
     - potential errors
-        - 500 errors on deployment due to autofac
+        - 500 error on deployment due to autofac
             - restart function
+        - 405 error on deployment
+            - go to azure portal --> function app --> application settings
+                - create a new setting: WEBSITE_WEBDEPLOY_USE_SCM = false
 
 ## AppInsights
     - live metrics stream
@@ -135,3 +144,5 @@
     - twilio pricing
         - $1/number/month
         - sms: $0.0075/outbound message (75 cents/100 messages)
+    - azure functions pricing
+        - free up to a million executions per month
