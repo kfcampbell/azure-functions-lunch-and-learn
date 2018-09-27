@@ -26,30 +26,24 @@
 ## Dependency-injecting and Unit Testing Functions
     - create new http trigger function
         - azure functions vscode extension
-        - create project first
+        - create project first (in subdirectory to avoid package conflicts between tests and implementation)
         - then create new function app
-            - access rights: function
+            - access rights: anonymous
+        - packages to add
+            - AzureFunctions.Autofac v3.0.5
+            - Twilio v5.17.0
     - get information from https://www.twilio.com/console
     - curl request to test local
         - curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:7071/api/pipeline_results_http_trigger?name=Keegan_Campbell_MD | json
     - add unit test project
         - dotnet new mstest
         - dotnet new sln
-        - dotnet sln add {path_to_csproj}
+        - dotnet sln add {path_to_test_csproj} // from outer directory
+        - dotnet add reference {path_to_implementation}
         - dotnet test
     - packages to add
-        - AzureFunctions.Autofac v3.0.5
-        - Microsoft.Net.SDK.Functions v.1.0.22
-        - Twilio v5.17.0
         - Moq v4.10.0
-        - make sure to add packages to both projects
-        - make sure to delete bin/obj folders before testing/building
-    - potential errors
-        - duplicate files
-            - delete obj/bin folders
-        - visualstudio not found
-            - add packages to both projects
-
+    
 ## Functions CI/CD
     - basic arm template. create and push and then copy from azure and then trim down
     - show build/release process

@@ -29,7 +29,7 @@ namespace Practice.Http.Trigger
                 new List<string> {
                     Environment.GetEnvironmentVariable("ToPhoneNumber")
                 },
-                "Hey motherfucker! Check the build!"
+                "Check the oven. Your build is done!"
             );
 
             if(sendSmsResult)
