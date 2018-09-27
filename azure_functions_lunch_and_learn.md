@@ -33,9 +33,9 @@
     - curl request to test local
         - curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:7071/api/pipeline_results_http_trigger?name=Keegan_Campbell_MD | json
     - add unit test project
-        - dotnet new nunit
+        - dotnet new mstest
         - dotnet new sln
-        - dotnet sln add reference
+        - dotnet sln add {path_to_csproj}
         - dotnet test
     - packages to add
         - AzureFunctions.Autofac v3.0.5
